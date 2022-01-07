@@ -18,9 +18,6 @@ __all__ = [
     "d3",
     "d4",
     "d5",
-    "d6",
-    "d7",
-    "d7x",
     "tf_d0_ap",
     "tf_d1_ap",
     "tf_d2_ap",
@@ -53,11 +50,6 @@ d2 = EfficientDetBackboneConfig(model_name="efficientdet_d2")
 d3 = EfficientDetBackboneConfig(model_name="efficientdet_d3")
 d4 = EfficientDetBackboneConfig(model_name="efficientdet_d4")
 d5 = EfficientDetBackboneConfig(model_name="efficientdet_d5")
- 
-# d6, d7, d7x do not exist in the efficientdet config file
-# d6 = EfficientDetBackboneConfig(model_name="efficientdet_d6")
-# d7 = EfficientDetBackboneConfig(model_name="efficientdet_d7")
-# d7x = EfficientDetBackboneConfig(model_name="efficientdet_d7x")
 
 tf_d0_ap = EfficientDetBackboneConfig(model_name="tf_efficientdet_d0_ap")
 tf_d1_ap = EfficientDetBackboneConfig(model_name="tf_efficientdet_d1_ap")
