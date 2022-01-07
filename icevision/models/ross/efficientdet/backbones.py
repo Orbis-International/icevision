@@ -57,3 +57,4 @@ tf_d2_ap = EfficientDetBackboneConfig(model_name="tf_efficientdet_d2_ap")
 tf_d3_ap = EfficientDetBackboneConfig(model_name="tf_efficientdet_d3_ap")
 tf_d4_ap = EfficientDetBackboneConfig(model_name="tf_efficientdet_d4_ap")
 tf_d5_ap = EfficientDetBackboneConfig(model_name="tf_efficientdet_d5_ap")
+
