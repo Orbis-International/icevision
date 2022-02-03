@@ -40,3 +40,39 @@ def test_coco_metric(records, preds, expected_coco_output):
         coco_metric.finalize()
 
     assert output == expected_coco_output
+
+
+def test_coco_metric_name_bbox_enum():
+    coco_metric = COCOMetric(metric_type=COCOMetricType.bbox)
+
+    assert coco_metric.name == "COCOMetric-bbox"
+
+
+def test_coco_metric_name_mask_enum():
+    coco_metric = COCOMetric(metric_type=COCOMetricType.mask)
+
+    assert coco_metric.name == "COCOMetric-segm"
+
+
+def test_coco_metric_name_keypoint_enum():
+    coco_metric = COCOMetric(metric_type=COCOMetricType.keypoint)
+
+    assert coco_metric.name == "COCOMetric-keypoints"
+
+
+def test_coco_metric_name_bbox_str():
+    coco_metric = COCOMetric(metric_type="bbox")
+
+    assert coco_metric.name == "COCOMetric-bbox"
+
+
+def test_coco_metric_name_mask_str():
+    coco_metric = COCOMetric(metric_type="segm")
+
+    assert coco_metric.name == "COCOMetric-segm"
+
+
+def test_coco_metric_name_keypoint_str():
+    coco_metric = COCOMetric(metric_type="keypoints")
+
+    assert coco_metric.name == "COCOMetric-keypoints"

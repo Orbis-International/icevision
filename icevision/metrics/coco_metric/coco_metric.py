@@ -80,3 +80,11 @@ class COCOMetric(Metric):
 
         self._reset()
         return logs
+
+    @property
+    def name(self) -> str:
+
+        if isinstance(self.metric_type, COCOMetricType):
+            return f"COCOMetric-{self.metric_type.value}"
+        else:
+            return f"COCOMetric-{self.metric_type}"
