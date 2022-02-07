@@ -89,12 +89,15 @@ def build_infer_batch(records):
     imgs, img_metas = [], []
     for record in records:
         imgs.append(_img_tensor(record))
-        img_metas.append(_img_meta_mask(record))
 
-    data = {
-        "img": [torch.stack(imgs)],
-        "img_metas": [img_metas],
-    }
+        metas = _img_meta_mask(record)
+
+        if record.detection.mask_array:
+            metas["gt_masks"] = record.detection.mask_array.data
+
+        img_metas.append(metas)
+
+    data = {"img": [torch.stack(imgs)], "img_metas": [img_metas]}
 
     return data, records
 

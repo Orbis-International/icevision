@@ -142,6 +142,9 @@ def convert_raw_prediction(
     if keep_image:
         image = mmdet_tensor_to_image(sample["img"])
 
+        if (not record.detection.mask_array) and ("gt_masks" in sample["img_metas"]):
+            record.detection.set_mask_array(MaskArray(sample["img_metas"]["gt_masks"]))
+
         pred.set_img(image)
         record.set_img(image)
 

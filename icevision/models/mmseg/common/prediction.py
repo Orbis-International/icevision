@@ -76,8 +76,8 @@ def convert_raw_predictions(
 
     # TODO: This can be optimized by using looping through first tensor dims behaviour instead of chunking tensors?
     preds = []
-    for record, tensor_gt, mask_pred, tensor_image in zip(
-        records, cycle(tensor_gts), raw_preds, tensor_imgs
+    for record, tensor_gt, mask_pred, tensor_image, metas in zip(
+        records, cycle(tensor_gts), raw_preds, tensor_imgs, batch["img_metas"][0]
     ):
 
         pred = BaseRecord(
@@ -103,14 +103,9 @@ def convert_raw_predictions(
         if keep_images:
             record.set_img(tensor_to_image(tensor_image.squeeze()))
 
-            # We load the record to ensure mask data is available
-            if len(record.segmentation.masks):
-
-                (h, w, _) = record.img.shape
-
-                record.segmentation.set_mask_array(
-                    record.segmentation.masks[0].to_mask(h=h, w=w, pad_dim=False)
-                )
+            # We load segmentation data that was stored in metas
+            if (not record.segmentation.mask_array) and ("gt_masks" in metas):
+                record.segmentation.set_mask_array(MaskArray(metas["gt_masks"]))
 
         preds.append(Prediction(pred=pred, ground_truth=record))
 

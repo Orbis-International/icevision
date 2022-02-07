@@ -94,12 +94,21 @@ def build_infer_batch(
 ):
 
     images = []
+    img_metas = []
     for record in records:
         images.append(im2tensor(record.img))
 
+        metas = _img_meta_mask(record)
+
+        # HACK: we store segmentation in metas to avoid losing it upon unloading
+        if record.segmentation.mask_array:
+            metas["gt_masks"] = record.segmentation.mask_array.data
+
+        img_metas.append(metas)
+
     data = {
         "img": [torch.stack(images)],
-        "img_metas": [[_img_meta_mask(record)]],
+        "img_metas": [img_metas],
     }
 
     return data, records
