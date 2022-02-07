@@ -111,6 +111,14 @@ def convert_raw_prediction(
 ):
     # convert predictions
     raw_bboxes, raw_masks = raw_pred
+
+    empty_check = [x.shape[0] for x in raw_bboxes]
+
+    if 0 in empty_check:
+        idx_to_delete = empty_check.index(0)
+        raw_bboxes.pop(idx_to_delete)
+        raw_masks.pop(idx_to_delete)
+
     scores, labels, bboxes = _unpack_raw_bboxes(raw_bboxes)
 
     keep_mask = scores > detection_threshold
