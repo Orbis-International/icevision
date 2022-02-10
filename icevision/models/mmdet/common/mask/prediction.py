@@ -121,17 +121,18 @@ def convert_raw_prediction(
         raw_bboxes.pop(idx_to_delete)
         raw_masks.pop(idx_to_delete)
 
-    # Avoid situations where raw_masks is [[]]
-    if np.size(raw_masks):
-        raw_masks = []
-
     scores, labels, bboxes = _unpack_raw_bboxes(raw_bboxes)
 
     keep_mask = scores > detection_threshold
     keep_scores = scores[keep_mask]
     keep_labels = labels[keep_mask]
     keep_bboxes = [BBox.from_xyxy(*o) for o in bboxes[keep_mask]]
-    keep_masks = MaskArray(np.vstack(raw_masks)[keep_mask])
+
+    # Avoid situations where raw_masks is [[]]
+    if np.size(raw_masks) == 0:
+        keep_masks = None
+    else:
+        keep_masks = MaskArray(np.vstack(raw_masks)[keep_mask])
 
     keep_labels = convert_background_from_last_to_zero(
         label_ids=keep_labels, class_map=record.detection.class_map
