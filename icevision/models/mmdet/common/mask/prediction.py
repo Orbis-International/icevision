@@ -129,7 +129,7 @@ def convert_raw_prediction(
     keep_bboxes = [BBox.from_xyxy(*o) for o in bboxes[keep_mask]]
 
     # Avoid situations where raw_masks is [[]]
-    if np.size(raw_masks) == 0:
+    if raw_masks == [[]]:
         keep_masks = None
     else:
         keep_masks = MaskArray(np.vstack(raw_masks)[keep_mask])
